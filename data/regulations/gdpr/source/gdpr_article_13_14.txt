@@ -1,0 +1,3 @@
+GDPR Articles 13 and 14 - Information to be provided to data subjects.
+Controllers must provide data subjects with concise, transparent, intelligible and easily accessible information about processing. This includes identity of the controller, purposes of processing, legal basis, recipients, transfers to third countries, data retention period, rights of access, rectification, erasure, restriction, objection and portability, and the right to lodge a complaint.
+Where personal data was not obtained from the data subject, similar information must be provided within a reasonable period.

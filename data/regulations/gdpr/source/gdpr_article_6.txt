@@ -1,0 +1,3 @@
+GDPR Article 6 - Lawfulness of processing.
+Processing is lawful only if at least one legal basis applies. These include consent, performance of a contract, compliance with a legal obligation, protection of vital interests, performance of a task carried out in the public interest or exercise of official authority, and legitimate interests pursued by the controller except where overridden by interests or rights of the data subject.
+Controllers should document and communicate the legal basis used for each processing activity.

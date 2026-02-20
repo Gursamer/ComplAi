@@ -1,0 +1,2 @@
+GDPR Article 32 - Security of processing.
+Controllers and processors shall implement appropriate technical and organizational measures to ensure a level of security appropriate to risk. Measures may include pseudonymization and encryption of personal data, ability to ensure ongoing confidentiality, integrity, availability and resilience of processing systems and services, ability to restore availability and access in a timely manner after incident, and a process for regularly testing and evaluating effectiveness of security measures.

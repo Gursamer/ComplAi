@@ -1,0 +1,3 @@
+GDPR Article 33 - Notification of a personal data breach to the supervisory authority.
+In the case of a personal data breach, the controller shall without undue delay and, where feasible, not later than 72 hours after becoming aware of it, notify the supervisory authority unless the breach is unlikely to result in a risk to rights and freedoms of natural persons.
+Where notification is not made within 72 hours, reasons for delay should be provided. Processors must notify the controller without undue delay after becoming aware of a breach.

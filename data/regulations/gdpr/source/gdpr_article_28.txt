@@ -1,0 +1,3 @@
+GDPR Article 28 - Processor.
+Where processing is carried out on behalf of a controller, the controller shall use only processors providing sufficient guarantees to implement appropriate technical and organizational measures. Processing by a processor shall be governed by a contract that sets out subject matter and duration, nature and purpose, type of personal data and categories of data subjects, and obligations and rights of the controller.
+The processor shall process personal data only on documented instructions from the controller, ensure confidentiality, take security measures, assist with data subject requests, support compliance obligations, delete or return data at end of services, and allow audits and inspections.
