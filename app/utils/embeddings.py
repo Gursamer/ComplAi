@@ -23,17 +23,19 @@ def _hash_embedding(text: str, dim: int = _EMBED_DIM) -> list[float]:
 
 
 def embed_texts(texts: Iterable[str]) -> list[list[float]]:
-    text_list = list(texts)
+    text_list = [t if isinstance(t, str) else str(t) for t in texts]
     if not text_list:
         return []
 
-    if settings.openai_api_key:
+    if settings.openai_api_key.strip():
         try:
             from openai import OpenAI
 
             client = OpenAI(api_key=settings.openai_api_key)
             response = client.embeddings.create(model=settings.model_embed, input=text_list)
-            return [row.embedding for row in response.data]
+            vectors = [row.embedding for row in response.data]
+            if vectors and len(vectors) == len(text_list):
+                return vectors
         except Exception:
             pass
 

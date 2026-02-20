@@ -39,11 +39,18 @@ class Settings:
 
 
 _load_dotenv_if_present()
+
+_raw_top_k = os.environ.get("CLAUSE_TOP_K", "3")
+try:
+    _parsed_top_k = int(_raw_top_k)
+except ValueError:
+    _parsed_top_k = 3
+
 settings = Settings(
     openai_api_key=os.environ.get("OPENAI_API_KEY", ""),
     model_text=os.environ.get("MODEL_TEXT", "gpt-4.1-mini"),
     model_embed=os.environ.get("MODEL_EMBED", "text-embedding-3-small"),
     chroma_dir=os.environ.get("CHROMA_DIR", "storage/chroma"),
     report_dir=os.environ.get("REPORT_DIR", "storage/reports"),
-    clause_top_k=int(os.environ.get("CLAUSE_TOP_K", "3")),
+    clause_top_k=max(1, _parsed_top_k),
 )

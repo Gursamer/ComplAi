@@ -10,6 +10,10 @@ class Clause:
     category: str
     text: str
 
+    def __post_init__(self) -> None:
+        if not self.clause_id.strip():
+            raise ValueError("clause_id cannot be empty")
+
     def to_dict(self) -> dict:
         return asdict(self)
 
@@ -22,6 +26,9 @@ class GDPRMatch:
     snippet: str
     similarity_score: float
 
+    def __post_init__(self) -> None:
+        self.similarity_score = max(0.0, min(1.0, float(self.similarity_score)))
+
     def to_dict(self) -> dict:
         return asdict(self)
 
@@ -32,6 +39,11 @@ class RiskResult:
     risk_score: int
     issues: list[str]
     severity: str
+
+    def __post_init__(self) -> None:
+        self.risk_score = max(0, min(100, int(self.risk_score)))
+        if self.severity not in {"low", "medium", "high"}:
+            raise ValueError("severity must be one of: low, medium, high")
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -54,6 +66,11 @@ class ExecutiveSummary:
     total_clauses: int
     high_risk_clauses: int
     key_findings: list[str]
+
+    def __post_init__(self) -> None:
+        self.overall_risk_score = max(0, min(100, int(self.overall_risk_score)))
+        self.total_clauses = max(0, int(self.total_clauses))
+        self.high_risk_clauses = max(0, int(self.high_risk_clauses))
 
     def to_dict(self) -> dict:
         return asdict(self)

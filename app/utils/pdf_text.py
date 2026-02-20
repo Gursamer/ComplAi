@@ -22,7 +22,7 @@ def extract_pdf_text(pdf_path: str | Path) -> str:
     except Exception:
         pass
 
-    # Fallback for malformed/minimal files saved with .pdf extension.
+    # Fallback path for malformed or non-standard PDFs.
     raw = path.read_bytes().decode("latin-1", errors="ignore")
     raw = raw.replace("\r\n", "\n").replace("\r", "\n")
     cleaned = re.sub(r"[ \t]+", " ", raw)
