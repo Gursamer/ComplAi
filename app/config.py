@@ -28,6 +28,7 @@ class Settings:
     chroma_dir: str
     report_dir: str
     clause_top_k: int
+    enable_llm_risk_explanations: bool
 
     @property
     def chroma_path(self) -> Path:
@@ -46,6 +47,9 @@ try:
 except ValueError:
     _parsed_top_k = 3
 
+_raw_llm_explain = os.environ.get("ENABLE_LLM_RISK_EXPLANATIONS", "0").strip().lower()
+_parsed_llm_explain = _raw_llm_explain in {"1", "true", "yes", "on"}
+
 settings = Settings(
     openai_api_key=os.environ.get("OPENAI_API_KEY", ""),
     model_text=os.environ.get("MODEL_TEXT", "gpt-4.1-mini"),
@@ -53,4 +57,5 @@ settings = Settings(
     chroma_dir=os.environ.get("CHROMA_DIR", "storage/chroma"),
     report_dir=os.environ.get("REPORT_DIR", "storage/reports"),
     clause_top_k=max(1, _parsed_top_k),
+    enable_llm_risk_explanations=_parsed_llm_explain,
 )

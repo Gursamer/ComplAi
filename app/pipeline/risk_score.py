@@ -1,10 +1,37 @@
 from __future__ import annotations
 
+from app.config import settings
 from app.schemas import Clause, GDPRMatch, RiskResult
 
 
 HIGH_RISK_TERMS = ("sell", "share with any third party", "unlimited", "without notice")
 LOW_CONF_TERMS = ("reasonable", "best effort", "as needed", "commercially reasonable")
+
+
+def _llm_explanation(clause: Clause, top_match: GDPRMatch | None, score: int) -> str | None:
+    if not settings.enable_llm_risk_explanations or not settings.openai_api_key.strip():
+        return None
+    try:
+        from openai import OpenAI
+
+        article = top_match.article if top_match else "Unknown article"
+        prompt = (
+            "Provide one short compliance rationale sentence for this clause risk assessment.\n"
+            f"Clause: {clause.text[:450]}\n"
+            f"Top GDPR match: {article}\n"
+            f"Rule score: {score}\n"
+            "Keep it factual, under 35 words, no legal advice disclaimer."
+        )
+        client = OpenAI(api_key=settings.openai_api_key)
+        response = client.chat.completions.create(
+            model=settings.model_text,
+            temperature=0,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        content = (response.choices[0].message.content or "").strip()
+        return content if content else None
+    except Exception:
+        return None
 
 
 def score_risks(clauses: list[Clause], matches: list[GDPRMatch]) -> list[RiskResult]:
@@ -48,6 +75,10 @@ def score_risks(clauses: list[Clause], matches: list[GDPRMatch]) -> list[RiskRes
 
         if not issues:
             issues.append("No significant GDPR risks detected by MVP rule set.")
+
+        llm_note = _llm_explanation(clause, top_match[0] if top_match else None, score)
+        if llm_note:
+            issues.append(f"LLM note: {llm_note}")
 
         results.append(RiskResult(clause_id=clause.clause_id, risk_score=score, issues=issues, severity=severity))
 

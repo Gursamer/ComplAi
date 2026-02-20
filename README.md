@@ -26,6 +26,8 @@ MODEL_TEXT=gpt-4.1-mini
 MODEL_EMBED=text-embedding-3-small
 CHROMA_DIR=storage/chroma
 REPORT_DIR=storage/reports
+CLAUSE_TOP_K=3
+ENABLE_LLM_RISK_EXPLANATIONS=0
 ```
 
 ## Build GDPR index
@@ -38,6 +40,12 @@ python -m app.rag.build_index
 
 ```bash
 python -m app.pipeline.run_pipeline --file data/samples/contracts/sample_vendor_agreement.pdf
+```
+
+## Smoke tests
+
+```bash
+python -m unittest app.tests.test_smoke -v
 ```
 
 ## Output
