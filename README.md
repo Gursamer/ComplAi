@@ -42,6 +42,27 @@ python -m app.rag.build_index
 python -m app.pipeline.run_pipeline --file data/samples/contracts/sample_vendor_agreement.pdf
 ```
 
+## Run API (Week 3)
+
+```bash
+uvicorn app.api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+Endpoints:
+
+- `POST /analyze` (multipart upload with PDF file) -> returns report JSON
+- `GET /reports/{id}` -> returns stored report JSON
+- `GET /reports` -> lists stored reports
+
+Example curl:
+
+```bash
+curl -X POST "http://127.0.0.1:8000/analyze" \
+  -H "accept: application/json" \
+  -H "Content-Type: multipart/form-data" \
+  -F "file=@data/samples/contracts/sample_vendor_agreement.pdf"
+```
+
 ## Smoke tests
 
 ```bash
